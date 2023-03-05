@@ -6424,7 +6424,7 @@ func (messageSendingStateFailed *MessageSendingStateFailed) GetMessageSendingSta
 type Message struct {
 	tdCommon
 	ID                      int64                   `json:"id"`                           // Message identifier; unique for the chat to which the message belongs
-	Sender                  MessageSender           `json:"sender"`                       // The sender of the message
+	Sender                  MessageSender           `json:"sender_id"`                       // The sender of the message
 	ChatID                  int64                   `json:"chat_id"`                      // Chat identifier
 	SendingState            MessageSendingState     `json:"sending_state"`                // Information about the sending state of the message; may be null
 	SchedulingState         MessageSchedulingState  `json:"scheduling_state"`             // Information about the scheduling state of the message; may be null
@@ -6598,7 +6598,7 @@ func (message *Message) UnmarshalJSON(b []byte) error {
 	message.MediaAlbumID = tempObj.MediaAlbumID
 	message.RestrictionReason = tempObj.RestrictionReason
 
-	fieldSender, _ := unmarshalMessageSender(objMap["sender"])
+	fieldSender, _ := unmarshalMessageSender(objMap["sender_id"])
 	message.Sender = fieldSender
 
 	fieldSendingState, _ := unmarshalMessageSendingState(objMap["sending_state"])
@@ -24239,7 +24239,7 @@ func (notificationTypeNewCall *NotificationTypeNewCall) GetNotificationTypeEnum(
 type NotificationTypeNewPushMessage struct {
 	tdCommon
 	MessageID  int64              `json:"message_id"`  // The message identifier. The message will not be available in the chat history, but the ID can be used in viewMessages, or as reply_to_message_id
-	Sender     MessageSender      `json:"sender"`      // The sender of the message. Corresponding user or chat may be inaccessible
+	Sender     MessageSender      `json:"sender_id"`      // The sender of the message. Corresponding user or chat may be inaccessible
 	SenderName string             `json:"sender_name"` // Name of the sender
 	IsOutgoing bool               `json:"is_outgoing"` // True, if the message is outgoing
 	Content    PushMessageContent `json:"content"`     // Push message content
@@ -24294,7 +24294,7 @@ func (notificationTypeNewPushMessage *NotificationTypeNewPushMessage) UnmarshalJ
 	notificationTypeNewPushMessage.SenderName = tempObj.SenderName
 	notificationTypeNewPushMessage.IsOutgoing = tempObj.IsOutgoing
 
-	fieldSender, _ := unmarshalMessageSender(objMap["sender"])
+	fieldSender, _ := unmarshalMessageSender(objMap["sender_id"])
 	notificationTypeNewPushMessage.Sender = fieldSender
 
 	fieldContent, _ := unmarshalPushMessageContent(objMap["content"])
